@@ -58,12 +58,14 @@ class LoginViewModelTest {
 
     @Test
     fun `login with valid data sets Loading then Success`() = runTest {
-        val expected = LoginScreenState.Success
+        val expectedLoading = LoginScreenState.Loading
         viewModel.login("test@email.com", "password")
         runCurrent()
+        assertEquals(expectedLoading, viewModel.state.value)
+
         advanceTimeBy(3001)
-        val actual = viewModel.state.value
-        assertEquals(expected, actual)
+        val expectedSuccess = LoginScreenState.Success
+        assertEquals(expectedSuccess, viewModel.state.value)
     }
 
 }
